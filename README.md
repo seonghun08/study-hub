@@ -18,3 +18,7 @@ Eclipse에선 잘 작동되던 것이 왜이리 고통을 주나 했는데 암�
 간단하게 설명하면 MVC패턴으로 Controller를 통해 uri를 받고, view에만 집중 할 수 있도록 하였고 
 HttpServlet으로 들어온 request, response를 Cmd를 통해 데이터를 가공하는 방식이다.
 BoardDAO로 DB에 접속하여 가져온 값을 BoardDTO 객체에 담아 request로 view에 뿌리는 방식으로 만들었다.
+
+
+
+
