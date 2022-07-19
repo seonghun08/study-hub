@@ -1,4 +1,4 @@
-## Sample web Service
+# Sample web Service
 자바 기본 웹 서비스
 회원가입/로그인 및 게시판 기능 구현
 
