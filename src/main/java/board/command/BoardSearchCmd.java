@@ -7,7 +7,7 @@ import board.model.*;
 public class BoardSearchCmd implements BoardCmd{
 
 	@Override
-	public void execute(HttpServletRequest request, HttpServletResponse reponse) {
+	public void execute(HttpServletRequest request, HttpServletResponse response) {
 		
 		BoardDAO dao = new BoardDAO();
 		String searchOption = request.getParameter("searchOption");

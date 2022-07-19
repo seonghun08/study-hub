@@ -6,7 +6,7 @@ import board.model.*;
 
 public class BoardListCmd implements BoardCmd{
 	
-	public void execute(HttpServletRequest request, HttpServletResponse reponse) {
+	public void execute(HttpServletRequest request, HttpServletResponse response) {
 		BoardDAO dao = new BoardDAO();
 		ArrayList<BoardDTO> list;
 		

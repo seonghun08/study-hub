@@ -8,7 +8,7 @@ public class BoardUpdateCheckCmd implements BoardCmd{
 	public boolean password_check;
 	
 	@Override
-	public void execute(HttpServletRequest request, HttpServletResponse reponse) {
+	public void execute(HttpServletRequest request, HttpServletResponse response) {
 		// TODO Auto-generated method stub
 		String inputNum = request.getParameter("num");
 		String inputPassword = request.getParameter("password");

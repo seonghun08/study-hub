@@ -6,7 +6,7 @@ import board.model.*;
 public class BoardUpdateCmd implements BoardCmd{
 	
 	@Override
-	public void execute(HttpServletRequest request, HttpServletResponse reponse) {
+	public void execute(HttpServletRequest request, HttpServletResponse response) {
 		
 		String inputNum = request.getParameter("num");
 		String inputSubject = request.getParameter("subject");

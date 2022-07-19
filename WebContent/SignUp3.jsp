@@ -44,7 +44,7 @@
 						"1234"
 						);
 				
-				sql = "INSERT INTO MEMBER (id, password, name, gender, address, phone, email)"
+				sql = "INSERT INTO jspbook.member (id, password, name, gender, address, phone, email)"
 					+ " VALUES (?, ?, ?, ?, ?, ?, ?)";
 				
 				pstmt = conn.prepareStatement(sql);

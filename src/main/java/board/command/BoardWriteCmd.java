@@ -6,7 +6,7 @@ import board.model.*;
 public class BoardWriteCmd implements BoardCmd{
 
 	@Override
-	public void execute(HttpServletRequest request, HttpServletResponse reponse) {
+	public void execute(HttpServletRequest request, HttpServletResponse response) {
 		String name = request.getParameter("name");
 		String subject = request.getParameter("subject");
 		String content = request.getParameter("content");

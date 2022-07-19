@@ -6,7 +6,7 @@ import board.model.*;
 public class BoardReplyFormCmd implements BoardCmd{
 
 	@Override
-	public void execute(HttpServletRequest request, HttpServletResponse reponse) {
+	public void execute(HttpServletRequest request, HttpServletResponse response) {
 		
 		String inputNum = request.getParameter("num");
 		BoardDAO dao = new BoardDAO();
