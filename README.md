@@ -4,6 +4,7 @@
 
 #2021.08.29 완성
 MPA 방식, 게시판 개념 CRUD
+
 java + mysql + jsp + servlet + Model2(MVC 패턴)
 
 
