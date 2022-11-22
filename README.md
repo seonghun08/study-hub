@@ -15,3 +15,4 @@ BoardDAO로 DB에 접속하여 가져온 값을 BoardDTO 객체에 담아 reques
 
 
 
+![1f22b86775d15d](https://user-images.githubusercontent.com/68460507/203376416-3fa9e7e4-e42c-432a-ba60-c060dbf3b473.jpg)
