@@ -11,8 +11,3 @@ http://localhost:8080/Sample/boardList.bbs
 MVC패턴으로 Controller를 통해 uri를 받고, view에만 집중 할 수 있도록 하였고 
 HttpServlet으로 들어온 request, response를 Cmd를 통해 데이터를 가공하는 방식이다.<br>
 BoardDAO로 DB에 접속하여 가져온 값을 BoardDTO 객체에 담아 request로 view에 뿌리는 방식으로 만들었다.
-
-
-
-
-![1f22b86775d15d](https://user-images.githubusercontent.com/68460507/203376416-3fa9e7e4-e42c-432a-ba60-c060dbf3b473.jpg)
