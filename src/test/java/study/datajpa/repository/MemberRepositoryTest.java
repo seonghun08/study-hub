@@ -4,6 +4,9 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.transaction.annotation.Transactional;
 import study.datajpa.dto.MemberDTO;
 import study.datajpa.entity.Member;
@@ -149,6 +152,36 @@ class MemberRepositoryTest {
         });
     }
 
+    @Test
+    public void paging() throws Exception {
+        // given 이러한 데이터가 있을 때
+        for (int i = 1; i <= 10; i++) {
+            memberRepository.save(new Member("member" + i, 10));
+        }
 
+        int age = 10;
+        PageRequest pageRequest = PageRequest.of(0, 3, Sort.Direction.DESC, "id");
+
+        // when 이렇게 하면
+        Page<Member> page = memberRepository.findByAge(age, pageRequest);
+
+        // then
+        // 현재 페이지 내 요소 개수
+        assertEquals(page.stream().count(), 3);
+        // 총 요소 개수
+        assertEquals(page.getTotalElements(), 10);
+        // 현재 페이지
+        assertEquals(page.getNumber(), 0);
+        // 총 페이지 개수
+        assertEquals(page.getTotalPages(), 4);
+        // 첫번째 페이가 맞는가
+        assertTrue(page.isFirst());
+        // 다음 페이지가 있는가
+        assertTrue(page.hasNext());
+
+        page.getContent().forEach(m -> {
+            System.out.println(m);
+        });
+    }
 }
 
