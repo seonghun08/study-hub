@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Slice;
 import org.springframework.data.domain.Sort;
 import org.springframework.transaction.annotation.Transactional;
 import study.datajpa.dto.MemberDTO;
@@ -154,18 +155,19 @@ class MemberRepositoryTest {
 
     @Test
     public void paging() throws Exception {
-        // given 이러한 데이터가 있을 때
         for (int i = 1; i <= 10; i++) {
             memberRepository.save(new Member("member" + i, 10));
         }
 
         int age = 10;
         PageRequest pageRequest = PageRequest.of(0, 3, Sort.Direction.DESC, "id");
-
-        // when 이렇게 하면
+        /**
+         * if api 로 보내는 경우 Entity 자체를 반환하면 안된다!!!
+         * 꼭 DTO 로 변환시켜 반환해야 한다.
+         */
         Page<Member> page = memberRepository.findByAge(age, pageRequest);
+//        Page<MemberDTO> page = page2.map(p -> new MemberDTO(p.getId(), p.getUsername(), p.getTeam().getName()));
 
-        // then
         // 현재 페이지 내 요소 개수
         assertEquals(page.stream().count(), 3);
         // 총 요소 개수
@@ -174,6 +176,70 @@ class MemberRepositoryTest {
         assertEquals(page.getNumber(), 0);
         // 총 페이지 개수
         assertEquals(page.getTotalPages(), 4);
+        // 첫번째 페이가 맞는가
+        assertTrue(page.isFirst());
+        // 다음 페이지가 있는가
+        assertTrue(page.hasNext());
+
+        page.getContent().forEach(m -> {
+            System.out.println(m);
+        });
+    }
+
+    @Test
+    public void paging2() throws Exception {
+        Team teamA = new Team("teamA");
+        Team teamB = new Team("teamB");
+
+        teamRepository.save(teamA);
+        teamRepository.save(teamB);
+
+        Member member1 = new Member("member1", 10, teamA);
+        Member member2 = new Member("member2", 10, teamB);
+        Member member3 = new Member("member3", 10);
+
+        memberRepository.save(member1);
+        memberRepository.save(member2);
+        memberRepository.save(member3);
+
+        int age = 10;
+        PageRequest pageRequest = PageRequest.of(0, 3, Sort.Direction.DESC, "id");
+
+
+        Page<Member> page = memberRepository.findDTOByAge(pageRequest);
+        System.out.println(page.getTotalElements());
+        System.out.println(page.getContent());
+
+
+        Page<MemberDTO> map = page.map(p -> new MemberDTO(p.getId(), p.getUsername(), p.getTeam() == null ? null : p.getTeam().getName()));
+        System.out.println(map.getTotalElements());
+        System.out.println(map.getContent());
+
+//        Page<Member> page = memberRepository.findByAge(age, pageRequest);
+//        Page<MemberDTO> dtoPage = page.map(m -> new MemberDTO(
+//                m.getId(),
+//                m.getUsername(),
+//                m.getTeam().getName()
+//        ));
+//        dtoPage.getContent().forEach(m -> {
+//            System.out.println(m);
+//        });
+    }
+
+    @Test
+    public void slice() throws Exception {
+        for (int i = 1; i <= 10; i++) {
+            memberRepository.save(new Member("member" + i, 10));
+        }
+
+        int age = 10;
+        PageRequest pageRequest = PageRequest.of(0, 3, Sort.Direction.DESC, "id");
+        Slice<Member> page = memberRepository.findSliceByAge(age, pageRequest);
+
+        // 현재 페이지 내 요소 개수
+        assertEquals(page.stream().count(), 3);
+        // 현재 페이지
+        assertEquals(page.getNumber(), 0);
         // 첫번째 페이가 맞는가
         assertTrue(page.isFirst());
         // 다음 페이지가 있는가
