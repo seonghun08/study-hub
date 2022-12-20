@@ -3,15 +3,19 @@ package study.datajpa.repository;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.annotation.Rollback;
 import org.springframework.transaction.annotation.Transactional;
 import study.datajpa.entity.Member;
 
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 @Transactional
 @SpringBootTest
+//@Rollback(value = false)
 class MemberJpaRepositoryTest {
 
     @Autowired MemberJpaRepository memberJpaRepository;
@@ -41,5 +45,20 @@ class MemberJpaRepositoryTest {
         members.forEach(m -> {
             System.out.println(m);
         });
+    }
+
+    @Test
+    public void bulkUpdate() throws Exception {
+        for (int i = 1; i < 10; i++) {
+            memberJpaRepository.save(new Member("member" + i, 10+i));
+        }
+
+        List<Member> members = memberJpaRepository.findAll();
+        members.forEach(m -> {
+            System.out.println(m);
+        });
+
+        int i = memberJpaRepository.bulkAgePlus(10);
+        assertEquals(i, 9);
     }
 }
