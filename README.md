@@ -84,9 +84,112 @@ __Slice :: 모바일과 같이 총 데이터 갯수가 필요없는 환경 즉 �
 DB의 데이터를 수정하는 경우 JPA는 Entity 객체를 사용하기 때문에 객체마다 쿼리를 발생시킨다.<br/>
 벌크성 수정쿼리는 이를 한번에 수정해주는 역할을 한다.<br/>
 ```java
+// JpaRepository<Member, Long>
 @Modifying(clearAutomatically = true)
 @Query("update Member m set m.age = m.age + 1 where m.age >= :age")
 int bulkAgePlus(@Param("age") int age);
 ```
 벌크 연산을 보내고 다음 로직이 같은 트랜젝션에서 벌어지면 영속성 컨텍스트 내에 있는 데이터를 지워야 한다.<br/>
 __영속성 컨텍스트를 무시하고 바로 DB에 방영하기 때문에 영속성 컨텍스트는 변경된 값을 알 수 없다.__<br/>
+
+
+
+## @EntityGraph
+```java
+// JpaRepository<Member, Long>
+@EntityGraph(attributePaths = {"team"})
+List<Member> findByUsername(String username)
+```
+
+```java
+// Member Entity
+@NamedEntityGraph(
+        name = "Member.all",
+        attributeNodes = @NamedAttributeNode("team")
+)
+
+// JpaRepository<Member, Long>
+@EntityGraph(value = "Member.all")
+    List<Member> findEntityGraphByUsername(@Param("username") String username);
+```
+연관된 Entity들을 SQL 한번에 조회하는 방법 __N+1 문제 해결__<br/>
+JPQL 없이 fetch join을 사용할 수 있다.
+
+
+
+## Hint & Lock
+```java
+// JpaRepository<Member, Long>
+// @Transactional(readOnly = true)
+@QueryHints(value = @QueryHint(name = "org.hibernate.readOnly", value = "true"))
+Member findReadOnlyByUsername(String username);
+```
+spring5.1 ver 이후 @Transaction(readOnly=true)로 설정하면, @QueryHint의 readOnly까지 모두 동작한다.<br/>
+@Transaction(readOnly=true)는 트랜젝션 커밋 시점에 flush를 하지 않기 때문에 변경감지 비용이 없다.
+
+```java
+@Lock(LockModeType.PESSIMISTIC_WRITE)
+Member findLockByUsername(String username);
+```
+락은 동시에 같은 데이터를 수정하는 하는 오류를 방지할 수 있다.<br/>
+실무에서 락은 최후의 보루 정도로 생각해야 한다. 락은 내용이 깊기 때문에 따로 더 공부하도록 하자.<br/>
+https://www.inflearn.com/course/%EC%8A%A4%ED%94%84%EB%A7%81-%EB%8D%B0%EC%9D%B4%ED%84%B0-JPA-%EC%8B%A4%EC%A0%84/unit/28020?category=questionDetail&tab=community&q=92603
+
+
+
+## Auditing
+```java
+@EntityListeners(AuditingEntityListener.class)
+@MappedSuperclass
+@Getter
+public class BaseEntity {
+
+    @CreatedDate
+    @Column(updatable = false)
+    private LocalDateTime createdDate;
+    
+    @LastModifiedDate
+    private LocalDateTime lastModifiedDate;
+    ......
+}
+```
+
+```java
+// App
+@Bean
+public AuditorAware<String> auditorProvider() {
+    return () -> Optional.of(UUID.randomUUID().toString());
+}
+```
+실무에서는 세션 정보를 넣거나, 스프링 시큐리티 정보에서 ID를 받는다.<br/>
+Entity를 저장하거나, 수정할 때 따로 값을 넣을 필요없이 자동으로 값을 넣어준다.
+
+
+
+## Projections
+Entity 대신 DTO를 편리하게 조회할 때 사용한다.<br/>
+전체 Entity가 아니라 간단하게 회원 이름만 조회하고 싶은 경우 유용하다.
+```java
+public interface UsernameOnly {
+    @Value("#{'이름: ' + target.username + ', 나이: ' + target.age}")
+    String getUsername();
+}
+```
+조회 할 Entity의 필드를 getter 형식으로 지정하면 해당 필드만 선택해서 조회(Projection)한다.
+
+```java
+// JpaRepository<Member, Long>
+List<UsernameOnly> findProjectionsByUsername(String username);
+```
+타입만 지정해주면 사용할 수 있으며, SQL에서 select 절에서 username만 조회된다.<br/>
+DTO 형식도 가능하며 Class를 생성하여 생성자의 파라미터로 매칭한다.
+
+```java
+// JpaRepository<Member, Long>
+<T> List<T> findProjectionsByUsername(String username, Class<T> type);
+
+// JpaRepositoryTest
+List<UsernameOnly> result = memberRepository.findProjectionsByUsername("name", UsernameOnly.class);
+```
+Generic type으로 동적 Projections도 가능하다.
+파라미터에 맞는 생성자를 포함한 Class를 넣어주면 된다.
