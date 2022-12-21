@@ -1,12 +1,11 @@
 package study.datajpa.repository;
 
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Slice;
-import org.springframework.data.domain.Sort;
+import org.springframework.data.domain.*;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.transaction.annotation.Transactional;
 import study.datajpa.dto.MemberDTO;
 import study.datajpa.entity.Member;
@@ -25,9 +24,12 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 @SpringBootTest
 class MemberRepositoryTest {
 
-    @Autowired MemberRepository memberRepository;
-    @Autowired TeamRepository teamRepository;
-    @PersistenceContext EntityManager em;
+    @Autowired
+    MemberRepository memberRepository;
+    @Autowired
+    TeamRepository teamRepository;
+    @PersistenceContext
+    EntityManager em;
 
     @Test
     public void testMember() throws Exception {
@@ -38,7 +40,7 @@ class MemberRepositoryTest {
         Member findMember = memberRepository.findById(saveMember.getId()).orElseThrow();
         assertEquals(saveMember, findMember);
     }
-    
+
     @Test
     public void basicCRUD() throws Exception {
         Member member1 = new Member("member1");
@@ -335,5 +337,113 @@ class MemberRepositoryTest {
 
         List<Member> members = memberRepository.findMemberCustom();
         System.out.println(members.get(0).getUsername());
+    }
+
+    @DisplayName("Specifications 예제")
+    @Test
+    public void specBasic() throws Exception {
+        // given
+        Team teamA = new Team("teamA");
+        teamRepository.save(teamA);
+
+        Member member1 = new Member("member1", 10, teamA);
+        Member member2 = new Member("member2", 10, teamA);
+        memberRepository.save(member1);
+        memberRepository.save(member2);
+
+        em.flush();
+        em.clear();
+
+        // when
+        Specification<Member> spec = MemberSpec.username("member1").and(MemberSpec.teamName("teamA"));
+        List<Member> result = memberRepository.findAll(spec);
+
+        // then
+        assertEquals(result.size(), 1);
+    }
+
+    @DisplayName("Query By Example 예제")
+    @Test
+    public void queryByExample() throws Exception {
+        // given
+        Team teamA = new Team("teamA");
+        teamRepository.save(teamA);
+
+        Member member1 = new Member("member1", 10, teamA);
+        Member member2 = new Member("member2", 10, teamA);
+        memberRepository.save(member1);
+        memberRepository.save(member2);
+
+        em.flush();
+        em.clear();
+
+        //when
+        Member member = new Member("member1");
+        Team team = new Team("teamA");
+        member.changeTeam(team);
+
+        // 조인이 가능하나, 내부조인만 가능하고 외부조인은 불가능하다.
+        // 정확한 매칭 "="만 지원
+        ExampleMatcher matcher = ExampleMatcher.matching().withIgnorePaths("age");
+        Example<Member> example = Example.of(member, matcher);
+        List<Member> result = memberRepository.findAll(example);
+
+        //then
+        assertEquals(result.get(0).getUsername(), "member1");
+    }
+
+    /**
+     * projections 간편하게 몇 개만 뽑고 싶을 때 유용한 방식
+     */
+    @Test
+    public void projections() throws Exception {
+        // given
+        Team teamA = new Team("teamA");
+        teamRepository.save(teamA);
+
+        Member member1 = new Member("member1", 10, teamA);
+        Member member2 = new Member("member2", 10, teamA);
+        memberRepository.save(member1);
+        memberRepository.save(member2);
+
+        em.flush();
+        em.clear();
+
+        //when
+        // 인터페이스를 활용한 방식
+//        List<UsernameOnly> result = memberRepository.findProjectionsByUsername("member1");
+        // dto 방식
+//        List<UsernameOnlyDto> result = memberRepository.findUsernameOnlyDtoByUsername("member1", UsernameOnlyDto.class);
+
+        // 엔티티 하나를 넘어서 조인이 들어가는 순간 최적화가 안되는 단점이 있다.
+        List<NestedClosedProjections> result = memberRepository.findUsernameOnlyDtoByUsername("member1", NestedClosedProjections.class);
+
+        result.forEach(m -> {
+            System.out.println(m.getUsername() + " :: " + m.getTeam());
+        });
+    }
+
+    @Test
+    public void nativeQuery() throws Exception {
+        // given
+        Team teamA = new Team("teamA");
+        teamRepository.save(teamA);
+
+        Member member1 = new Member("member1", 10, teamA);
+        Member member2 = new Member("member2", 10, teamA);
+        memberRepository.save(member1);
+        memberRepository.save(member2);
+
+        em.flush();
+        em.clear();
+
+        //when
+//        Member result = memberRepository.findByNativeQuery("member1");
+        Page<MemberProjection> result = memberRepository.findByNativeProjection(PageRequest.of(0, 10));
+
+        result.getContent().forEach(m -> {
+            System.out.println("m.getUsername() = " + m.getUsername());
+            System.out.println("m.getTeamName() = " + m.getTeamName());
+        });
     }
 }

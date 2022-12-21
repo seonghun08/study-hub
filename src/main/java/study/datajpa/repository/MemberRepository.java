@@ -15,27 +15,19 @@ import java.util.Collection;
 import java.util.List;
 
 @Transactional(readOnly = true)
-public interface MemberRepository extends JpaRepository<Member, Long>, MemberRepositoryCustom {
+public interface MemberRepository extends JpaRepository<Member, Long>, MemberRepositoryCustom, JpaSpecificationExecutor<Member> {
 
     List<Member> findByUsername(String username);
 
     List<Member> findByUsernameAndAgeGreaterThan(String username, int age);
 
-    @Query(
-            "select m from Member m" +
-                    " where m.username = :username" +
-                    " and m.age = :age"
-    )
+    @Query("select m from Member m where m.username = :username and m.age = :age")
     List<Member> findUser(@Param("username") String username, @Param("age") int age);
 
     @Query("select m.username from Member m")
     List<String> findUsernameList();
 
-    @Query(
-            "select new study.datajpa.dto.MemberDTO(m.id, m.username, t.name)" +
-                    " from Member m" +
-                    " join m.team t"
-    )
+    @Query("select new study.datajpa.dto.MemberDTO(m.id, m.username, t.name) from Member m join m.team t")
     List<MemberDTO> findMemberDTO();
 
     @Query("select m from Member m where m.username in :names")
@@ -50,7 +42,8 @@ public interface MemberRepository extends JpaRepository<Member, Long>, MemberRep
 
     @Query(
             value = "select m from Member m left outer join fetch m.team t",
-            countQuery = "select count(m.username) from Member m")
+            countQuery = "select count(m.username) from Member m"
+    )
     Page<Member> findDTOByAge(Pageable pageable);
 
     @Query(value = "select m from Member m join fetch m.team t")
@@ -66,10 +59,10 @@ public interface MemberRepository extends JpaRepository<Member, Long>, MemberRep
     @Query("select m from Member m left outer join m.team t")
     List<Member> findExAll(Pageable pageable);
 
-    @Override
-    // @EntityGraph() => fetch join 이라고 생각하면 된다.
-    @EntityGraph(attributePaths = {"team"})
-    List<Member> findAll();
+//    @Override
+//    // @EntityGraph() => fetch join 이라고 생각하면 된다.
+//    @EntityGraph(attributePaths = {"team"})
+//    List<Member> findAll();
 
     @EntityGraph(attributePaths = {"team"})
     @Query("select m from Member m")
@@ -85,4 +78,20 @@ public interface MemberRepository extends JpaRepository<Member, Long>, MemberRep
 
     @Lock(LockModeType.PESSIMISTIC_WRITE)
     Member findLockByUsername(String username);
+
+    // Projections
+    List<UsernameOnly> findProjectionsByUsername(@Param("username") String username);
+
+    <T> List<T> findUsernameOnlyDtoByUsername(@Param("username") String username, Class<T> type);
+
+    // Native Query
+    @Query(value = "select * from member where username = ?", nativeQuery = true)
+    Member findByNativeQuery(String username);
+
+    @Query(
+            value = "select m.member_id as id, m.username, t.name as teamName from member m left join team t",
+            countQuery = "select count(*) from member",
+            nativeQuery = true
+    )
+    Page<MemberProjection> findByNativeProjection(Pageable pageable);
 }

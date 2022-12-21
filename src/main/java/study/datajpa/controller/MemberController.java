@@ -44,18 +44,18 @@ public class MemberController {
                 .map(m -> new MemberDTO(m.getId(), m.getUsername(), m.getTeam() == null ? null : m.getTeam().getName()));
     }
 
-    @PostConstruct
-    public void init() {
-        Team teamA = new Team("teamA");
-        Team teamB = new Team("teamB");
-        teamRepository.save(teamA);
-        teamRepository.save(teamB);
-
-        for (int i = 1; i < 50; i++) {
-            memberRepository.save(new Member("member" + i, 10 + i, teamA));
-        }
-        for (int i = 51; i < 100; i++) {
-            memberRepository.save(new Member("member" + i, 10 + i, teamB));
-        }
-    }
+//    @PostConstruct
+//    public void init() {
+//        Team teamA = new Team("teamA");
+//        Team teamB = new Team("teamB");
+//        teamRepository.save(teamA);
+//        teamRepository.save(teamB);
+//
+//        for (int i = 1; i < 50; i++) {
+//            memberRepository.save(new Member("member" + i, 10 + i, teamA));
+//        }
+//        for (int i = 51; i < 100; i++) {
+//            memberRepository.save(new Member("member" + i, 10 + i, teamB));
+//        }
+//    }
 }

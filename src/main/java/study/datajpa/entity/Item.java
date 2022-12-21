@@ -15,9 +15,8 @@ import java.time.LocalDateTime;
 
 @Entity
 @Getter
-@EntityListeners(AuditingEntityListener.class)
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class Item implements Persistable<String> {
+public class Item extends BaseEntity implements Persistable<String> {
 
 //    @Id @GeneratedValue
 //    private Long id;
@@ -36,8 +35,8 @@ public class Item implements Persistable<String> {
     private String id;
 
     // @EntityListeners(AuditingEntityListener.class) 필요
-    @CreatedDate
-    private LocalDateTime createdDate;
+//    @CreatedDate
+//    private LocalDateTime createdDate;
 
     public Item(String id) {
         this.id = id;
@@ -51,6 +50,6 @@ public class Item implements Persistable<String> {
     @Override
     public boolean isNew() {
         // createdDate 값이 없다면 새로운 엔티티 객체로 인식
-        return createdDate == null;
+        return super.getCreatedDate() == null;
     }
 }
