@@ -193,3 +193,28 @@ List<UsernameOnly> result = memberRepository.findProjectionsByUsername("name", U
 ```
 Generic type으로 동적 Projections도 가능하다.
 파라미터에 맞는 생성자를 포함한 Class를 넣어주면 된다.
+
+__Entity 단일 조회는 최적화가 되지만 join을 통해 다른 Entity까지 가져올 경우 최적화가 안된다.__<br/>
+__위와 같은 한계가 있기 때문에 실무에서 단순할 때만 사용하고, 조금만 복잡해지면 QueryDSL을 사용하자.__
+
+
+
+## Native Query 
+JPA는 Native Query를 지원한다.
+```java
+@Query(value = "select * from member where username = ?", nativeQuery =true)
+Member findByNativeQuery(String username);
+```
+Native Query는 JPQL로 해결이 안되고 JdbcTemplate or myBatis로도 도저히 해결이 안될 때 사용하도록 하자.
+
+```java
+@Query(
+        value = "SELECT m.member_id as id, m.username, t.name as teamName " + 
+                "FROM member m left join team t ON m.team_id = t.team_id",
+        countQuery = "SELECT count(*) from member",
+        nativeQuery = true
+)
+Page<MemberProjection> findByNativeProjection(Pageable pageable);
+```
+Native Query + 인터페이스 기반 Projections을 활용하는 방법도 있다.<br/>
+Page가 되는 장점을 가졌으니 알아두고 필요해보일 때 써보도록 하자.
