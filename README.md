@@ -1,5 +1,5 @@
 # data-jpa
-스프링 데이터 JPA 실무 사용법
+스프링 데이터 JPA 실무 적용 정리
 
 ## @NamedQuery
 ```java
