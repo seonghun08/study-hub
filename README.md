@@ -99,13 +99,17 @@ public void fetch() throws Exception {
 ```
 
 fetch() : List 조회, 데이터 없으면 빈 리스트로 반환
+
 fetchOne() : 단건 조회
 * 결과가 없으면 : null
 * 결과가 둘 이상이면 : com.querydsl.core.NonUniqueResultException
+
 fetchFirst(): limit(1).fetchOne();
 
 `Deprecated 간단한 쿼리는 잘 동작하는데, 복잡한 쿼리(다중그룹 쿼리)는 잘 작동하지 않는다.` **
+
 fetchResults() : 페이징 정보 포함, total count 쿼리 추가 실행
+
 fetchCount() : count 쿼리로 변경해서 count 수 조회
 
 ## Join 문법
@@ -131,7 +135,8 @@ List<Member> result = queryFactory
 	.fetch();
 ```
 
-**theta join** 세타조인**:** 연관관계가 없는 필드로 조인
+**theta join** 세타조인<br/>
+연관관계가 없는 필드로 조인
 
 - 회원의 이름이 팀 이름과 같은 회원 조회(세타조인)
 
@@ -212,6 +217,7 @@ List<Member> result = queryFactory
 서브 쿼리는 select 절에 사용되는 Q 객체와 동일해서는 안된다. 서브 쿼리를 위한 새로운 Q 객체를 만들어야 한다.
 
 **from 절의 서브쿼리 한계**
+
 JPA JPQL 서브쿼리의 한계로 from 절의 서브쿼리는 지원하지 않는다. 
 
 **from 절의 서브쿼리 해결방안**
@@ -264,7 +270,8 @@ List<MemberDto> result = queryFactory
 .fetch();
 ```
 
-@QueryProjection는 컴파일러로 타입을 체크할 수 있으므로 가장 안전한 방법이다. 하지만 DTO에 queryDSL에 의존해야 하는 점과 DTO까지 Q파일을 생성해야 하는 단점이 있다.
+@QueryProjection는 컴파일러로 타입을 체크할 수 있으므로 가장 안전한 방법이다.<br/>
+하지만 DTO에 queryDSL에 의존해야 하는 점과 DTO까지 Q파일을 생성해야 하는 단점이 있다.
 
 ## 동적쿼리
 
