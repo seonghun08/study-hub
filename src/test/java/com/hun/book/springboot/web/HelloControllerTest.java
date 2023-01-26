@@ -1,22 +1,30 @@
 package com.hun.book.springboot.web;
 
+import com.hun.book.springboot.config.auth.SecurityConfig;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
-import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
+import org.springframework.context.annotation.ComponentScan;
+import org.springframework.context.annotation.FilterType;
+import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MockMvc;
 
 import static org.hamcrest.Matchers.is;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
-@SpringBootTest
-@AutoConfigureMockMvc
-class HelloControllerTest {
+//@SpringBootTest => @SpringBootTest 와 @WebMvcTest 둘 다 @BootstrapWith 를 가지고 있기 때문에 중복 X
+@WebMvcTest(controllers = HelloController.class,
+        excludeFilters = {
+                @ComponentScan.Filter(type = FilterType.ASSIGNABLE_TYPE, classes = SecurityConfig.class)
+        }
+)
+public class HelloControllerTest {
 
     @Autowired
     private MockMvc mvc;
 
+    @WithMockUser(roles="USER")
     @Test
     public void hello가_리턴된다() throws Exception {
         String hello = "hello";
@@ -26,6 +34,7 @@ class HelloControllerTest {
                 .andExpect(content().string(hello));
     }
 
+    @WithMockUser(roles="USER")
     @Test
     public void helloDto가_리턴된다() throws Exception {
         String name = "hello";

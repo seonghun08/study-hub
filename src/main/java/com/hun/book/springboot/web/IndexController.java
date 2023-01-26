@@ -1,6 +1,7 @@
 package com.hun.book.springboot.web;
 
-import com.hun.book.springboot.dto.PostsListResponseDto;
+import com.hun.book.springboot.config.auth.LoginUser;
+import com.hun.book.springboot.config.auth.dto.SessionUser;
 import com.hun.book.springboot.dto.PostsResponseDto;
 import com.hun.book.springboot.service.PostsService;
 import lombok.RequiredArgsConstructor;
@@ -9,7 +10,6 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 
-import java.util.List;
 
 @Controller
 @RequiredArgsConstructor
@@ -18,7 +18,10 @@ public class IndexController {
     private final PostsService postsService;
 
     @GetMapping("/")
-    public String index(Model model) {
+    public String index(@LoginUser SessionUser user, Model model) {
+        if (user != null) {
+            model.addAttribute("userName", user.getName());
+        }
         model.addAttribute("posts", postsService.findAllDesc());
         return "index";
     }
