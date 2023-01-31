@@ -5,15 +5,10 @@ spring:
     store-type: jdbc
 
   jpa:
+    show-sql: true
     hibernate:
-      ddl-auto: create
+      dialect: org.hibernate.dialect.MySQL5InnoDBDialect
 
-    properties:
-      hibernate:
-        show_sql: true
-
-  datasource:
-    url: jdbc:h2:tcp://localhost/~/testdb
-    username: sa
-    password:
-    driver-class-name: org.h2.Driver
+  h2:
+    console:
+      enabled: true
