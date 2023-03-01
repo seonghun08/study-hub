@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>js 기본 문법</title>
+</head>
+
+<body>
+    <script>
+        // var age = prompt("당신의 나이는?", "0");
+        // if (age >= 20) {
+        //     document.write("당신은 성인입니다.");
+        // } else {
+        //     document.write("당신은 미성년자입니다.");
+        // }
+        // document.write("<br/>");
+    </script>
+
+    <script>
+        var a1 = true;
+        var b1 = false;
+        var c1 = 10 > 5;
+        var d1 = Boolean(null);
+
+        document.write(a1, "<br/>");
+        document.write(b1, "<br/>");
+        document.write(c1, "<br/>");
+        document.write(d1, "<hr/>");
+
+        var num = 100;
+        var str = "자바스크립트";
+
+        document.write(typeof num, "<br/>");
+        document.write(typeof str, "<hr/>");
+    </script>
+
+    <script src="js/example.js"></script>
+
+    <script>
+        var str = "<table border='1'>";
+        str += "<tr>";
+        str += "<td>1</td><td>2</td><td>3</td>";
+        str += "</tr>";
+        str += "</table>";
+        str += "<hr/>"
+        document.write(str);
+    </script>
+
+    <script>
+        var a2 = 10;
+        var b2 = 20;
+        var c2 = 10;
+        var f2 = "20";
+        var result;
+
+        document.write(        
+              "<div>"
+            + "var a = 10<br/>"
+            + "var b = 20<br/>"
+            + "var c = 10<br/>"
+            + "var f = \"20\"<br/>"
+            + "</div>"
+        );
+
+        result = a2 > b2;
+        document.write("a > b = ", result, "<br/>");
+        result = a2 < b2;
+        document.write("a < b = ", result, "<br/>");
+        result = a2 <= b2;
+        document.write("a <= b = ", result, "<br/>");
+        result = b2 == f2;
+        document.write("b == f = ", result, "<br/>");
+        result = a2 != b2;
+        document.write("a != b = ", result, "<br/>");
+        result = b2 === f2;
+        document.write("b === f = ", result, "<hr/>");
+    </script>
+
+    <script>
+        var a3 = 10;
+        var b3 = 3;
+        var result = a3 > b3 ? "javascript" : "html";
+
+        document.write("var a = 10", "<br/>");
+        document.write("var b = 3", "<br/>");
+        document.write("var result = a > b ? \"javascript\" : \"html\"", "<br/>");
+        document.write("result = ", result);
+    </script>
+</body>
+
+</html>
