@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script>
+        function test() {
+            var user = new checkWeight(
+            prompt("이름을 입력하세요."), 
+            prompt("키를 입력하세요."), 
+            prompt("체중을 입력하세요.")
+            );
+
+            function checkWeight(name, height, weight) {
+                this.username = name;
+                this.height = height;
+                this.weight = weight;
+                this.minWeight;
+                this.maxWeight;
+
+                // this.getInfo = function() {} 메모리 절약을 위해 프로토타입으로 변경
+                checkWeight.prototype.getInfo = function() {
+                    var str = "";
+                    str += "이름: " + this.username + ", ";
+                    str += "키: " + this.height + ", ";
+                    str += "몸무게: " + this.weight + "<br/>";
+                    return str;
+                }
+                checkWeight.prototype.getResult = function( ) {
+                    this.minWeight = (this.height - 100) * 0.9 - 5;
+                    this.maxWeight = (this.height - 100) * 0.9 + 5;
+
+                    if(this.weight >= this.minWeight && 
+                    this.weight <= this.maxWeight) {
+                        return "정상 몸무게입니다";
+                    } else if(this.weight < this.minWeight) {
+                        return "정상 몸무게보다 미달입니다";
+                    } else {
+                        return "정상 몸무게보다 초과입니다";
+                    }
+                }
+            }
+
+            console.log(user);
+
+            document.write(user.getInfo());
+            document.write(user.getResult());
+            document.write("<br/>");
+            document.write("<button onclick='location.reload();'>돌아가기</button>")
+        }
+    </script>
+    <!-- <script>
+        /** 프로토타입을 활용하면 객체를 생성해도 객체 내 메서드는 서로 공유된다.
+         *  이로인해 메모리를 절약할 수 있는 이점이 있다.
+        */
+        function CheckWeight(name, height, weight) {
+            this.userName = name;
+            this.userHeight = height;
+            this.userWeight = weight;
+            this.minWeight;
+            this.maxWeight;
+        }
+        CheckWeight.prototype.getInfo = function() {
+            var str = ""
+            str += "이름: " + this.userName + ", ";
+            str += "키: " + this.userHeight + ", ";
+            str += "몸무게: " + this.userWeight + "<br>";
+            return  str;
+        }
+        CheckWeight.prototype.getResult = function( ) {
+            this.minWeight = (this.userHeight - 100) * 0.9 - 5;
+            this.maxWeight = (this.userHeight - 100) * 0.9 + 5;
+    
+            if(this.userWeight >= this.minWeight && 
+            this.userWeight <= this.maxWeight) {
+                return "정상 몸무게입니다";
+            } else if(this.userWeight < this.minWeight) {
+                return "정상 몸무게보다 미달입니다";
+            } else {
+                return "정상 몸무게보다 초과입니다";
+            }
+        }    
+        
+        var jang = new CheckWeight("장보리", 168, 62);
+        var park = new CheckWeight("박달재", 180, 88);
+        console.log(jang);
+        console.log(park);
+    
+        document.write(jang.getInfo());
+        document.write(jang.getResult(), "<br>");
+        document.write(jang.getResult === park.getResult);
+    </script> -->
+    <script>
+        function chColor() {
+            var arrColor = ["#ff0", "#6c0", "#fcf", "#cf0", "#39f"];
+            var arrNum = Math.floor(Math.random() * arrColor.length);
+            var bodyTag = document.getElementById("theBody");
+            bodyTag.style.backgroundColor = arrColor[arrNum];
+        }
+    </script>
+    <script>
+        function TestScore(name, kor, eng){
+            this.userName = name;
+            this.korNum = kor;
+            this.engNum = eng;
+        }
+
+        TestScore.prototype.getTestInfo = function() {
+            document.write("이름: " + this.userName, "<br>");
+            document.write("국어: " + this.korNum, "<br>");
+            document.write("영어: " + this.engNum, "<br>");
+        }
+        TestScore.prototype.getAvg = function() {
+            return  (this.korNum + this.engNum) / 2;
+        }
+
+        var kimgun = new TestScore("김군",80,90);
+        var ohgun = new TestScore("오군",100,80);
+    
+        kimgun.getTestInfo();
+        document.write("평균 점수: " + kimgun.getAvg(), "<br><br>");
+    
+        ohgun.getTestInfo();
+        document.write("평균 점수: " + ohgun.getAvg(), "<br>");
+    </script>
+</head>
+<body id="theBody">
+    <hr/>
+    <button onclick="test()">정상 몸무게 테스트하기</button>
+    <button onclick="chColor()">배경 색상 랜덤 바꾸기</button>
+</body>
+</html>
