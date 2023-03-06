@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>속성 탐색 선택자</title>
+    <script src="js/jquery.js"></script>
+    <script>
+        $(function(){
+            // target 속성을 가진 요소만 적용
+            $("#wrap a[target]")
+            .css({"color":"#f00"});
+
+            // href 속성 값이 https로 "시작하는" 요소만 적용
+            $("#wrap a[href^=https]")
+            .css({"color":"#0f0"});
+
+            // href 속성 값이 net으로 "끝나는" 요소만 적용
+            $("#wrap a[href$=net]")
+            .css({"color":"#00f"});
+
+            // href 속성 값이 google이 "포함된" 요소만 적용
+            $("#wrap a[href*=google]")
+            .css({"color":"#000"});
+
+            // id가 member_f이며, input 요소 중 "text"인 요소만 적용
+            $("#member_f :text")
+            .css({"background-color":"#ff0"});
+
+            // id가 member_f이며, input 요소 중 "password"인 요소만 적용
+            $("#member_f :password")
+            .css({"background-color":"#0ff"});
+        });
+    </script>
+    <script>
+        $(function(){
+            $("#wrap2 p:hidden").css({
+                    "display":"block",
+                    "background":"#ff0"
+            });
+    
+            // 현재 selected 되어진 값
+            var z1 = $("#zone1 :selected").val( );
+            console.log(z1);
+            
+            // 현재 checked 되어진 값
+            var z2 = $("#zone2 :checked").toArray();
+            console.log(z2);
+            var z3 = $("#zone3 :checked").val( );
+            console.log(z3);
+        });
+    </script>
+
+    <script src="js/content_search.js"></script>
+</head>
+<body>
+
+    <div>
+        <div id="wrap">
+            <p><a href="http://easyspub.co.kr" target="_blank">EasysPub</a></p>
+            <p><a href="https://naver.com">Naver</a></p>
+            <p><a href="http://daum.net">Daum</a></p>
+            <p><a href="http://google.co.kr">Google</a></p>
+        </div>
+        <form action="#" method="get" id="member_f">
+            <p>
+                <label for="user_id">아이디</label>
+                <input type="text" name="user_id" id="user_id">
+            </p>
+            <p>
+                <label for="user_pw">비밀번호</label>
+                <input type="password" name="user_pw" id="user_pw">
+            </p>
+            <button type="submit">로그인</button>
+            <hr/>
+        </form>
+    </div>
+
+    <div>
+        <div id="wrap2">
+            <p>내용1</p>
+            <p style="display:none">내용2</p>
+            <p>내용3</p>
+        </div>
+        <form action="#">
+            <p id="zone1">
+            <select name="course" id="course">
+                <option value="opt1">옵션1</option>
+                <option value="opt2" selected>옵션2</option>
+                <option value="opt3">옵션3</option>
+            </select>
+            </p>
+            <p id="zone2">
+                <input type="checkbox" name="hobby1" value="독서" checked> 독서
+                <input type="checkbox" name="hobby2" value="자전거" checked> 자전거
+                <input type="checkbox" name="hobby3" value="등산" checked> 등산
+            </p>
+            <p id="zone3">
+                <input type="radio" name="gender" value="male" checked> 남성
+                <input type="radio" name="gender" value="female"> 여성
+            </p>
+            <hr/>
+        </form>
+    </div>
+
+    <!-- src="js/content_search.js" <1> -->
+    <div id="outer_wrap">
+		<h1>콘텐츠 탐색 선택자</h1>
+		<section id="inner_1">
+			<h1>contains( ), contents( ), has( )</h1>
+			<p><span>내용1</span></p>
+			<p><strong>내용2</strong></p>
+			<p><span>내용3</span></p>
+		</section>
+		<section id="inner_2">
+			<h1>not( ), end( )</h1>
+			<p>내용4</p>
+			<p>내용5</p>
+			<p>내용6</p>
+		</section>
+	</div><hr/>
+
+    <!-- src="js/content_search.js" <2> -->
+    <div id="outer_wrap">
+		<h1>콘텐츠 탐색 선택자</h1>
+		<section id="inner_1_2">
+			<h2>find( ), filter( )</h2>
+			<p class="txt1">내용1</p>
+			<p class="txt2">내용2</p>
+		</section>
+		<section id="inner_2_2">
+			<h2>filter(function)</h2>
+			<p>index 0</p>
+			<p>index 1</p>
+			<p>index 2</p>
+			<p>index 3</p>
+		</section>
+        <hr/>
+	</div>
+
+    <div id="outer_wrap">
+		<h1>is( )</h1>
+		<section id="inner_1_3">
+			<h2>문단 태그 영역</h2>
+			<p>내용1</p>
+			<p style="display:none;">내용2</p>
+		</section>
+		
+		<section id="inner_2_3">
+			<h2>폼 태그 영역</h2>
+			<p>
+				<input type="checkbox" name="chk1" id="chk1" checked>
+				<label for="chk1">체크1</label>
+
+				<input type="checkbox" name="chk2" id="chk2">
+				<label for="chk2">체크2</label>           
+			</p>
+		</section>
+	</div>
+</body>
+</html>
