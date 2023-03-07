@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        /* #unw span{background-color:aqua;} */
+        dd {background-color:aqua;}
+    </style>
+    <script src="js/jquery.js"></script>
+    <script>
+        $(function( ){
+            $("#wrap p:eq(2)").after("<p>After Line</p>");
+            $("<p>insert After</p>").insertAfter("#wrap p:eq(1)");
+
+            $("#wrap p:eq(1)").before("<p>Before Line</p>");
+            $("<p>insert Before</p>").insertBefore("#wrap p:eq(0)");
+        });
+    </script>
+    <script>
+        $(function( ){
+            $("<li>appendTo</li>").appendTo("#listZone");
+            $("#listZone").append("<li>append</li>");
+            
+            $("<li>prependTo</li>").prependTo("#listZone");
+            $("#listZone").prepend("<li>prepend</li>");
+        });
+    </script>
+    <script>
+        $(function( ){
+            var copyObj = $(".box1").children().clone();
+    
+            $(".box2").remove();
+            $(".box3").empty();
+            $(".box3").append(copyObj);
+        });
+    </script>
+    <script>
+        $(function( ){
+            $("#replace").replaceWith("<h3>replace method</h3>");
+            $("<div>Change</div>").replaceAll(".re2 #ch");
+        });
+    </script>
+    <script>
+        $(function( ){
+            $("#tit_1").unwrap();
+            $(".ct1").wrap("<dd/>");
+            $(".ct2").wrapAll("<dd/>");
+            $("li").wrapInner("<h3/>");
+        });
+    </script>
+</head>
+<body>
+
+    <div id="wrap">
+		<p>내용1</p>
+		<p>내용2</p>
+		<p>내용3</p>
+	</div>
+
+    <ul id="listZone">
+		<li>리스트</li>
+	</ul>
+
+    <div class="box1">
+		<p>내용1</p>
+		<p>내용2</p>
+	</div>
+	<div class="box2">
+		<p>내용3</p>
+		<p>내용4</p>
+	</div>
+	<div class="box3">
+		<p>내용5</p>
+		<p>내용6</p>
+	</div>
+
+    <section class="box1">
+		<h2 id="replace">제목1</h2>
+		<div>내용1</div>
+		<div>내용2</div>
+	</section>
+	<section class="re2">
+		<h2>제목2</h2>    
+		<div id="ch">내용3</div>
+		<span id="ch">내용4</div>
+	</section>
+
+    <h1><strong id="tit_1">객체 조작 및 생성</strong></h1>
+    <p class="ct1">내용1</p>
+    <p class="ct1">내용2</p>
+    <p class="ct2">내용3</p>
+    <p class="ct2">내용4</p>
+    <ul>
+        <li>내용3</li>
+        <li>내용4</li>
+    </ul>
+    
+
+</body>
+</html>
