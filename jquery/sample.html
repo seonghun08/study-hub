@@ -1,16 +1,35 @@
 <!DOCTYPE html>
-<html lang="ko">
-<head>
-<meta charset="UTF-8">
-<title> 선택자 </title>
-<script src="js/jquery.js"></script>
-<script>
-	$(function(){
-		$("#title").css("color", "green");
-	});
-</script>
-</head>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments.html :: head"></head>
+<script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.min.js" crossorigin="anonymous"></script>
 <body>
-	<h1 id="title">jQuery</h1>
+    <h1>Hello APM</h1>
+    <button id="btn1">열기</button>
+    <button id="btn2">닫기</button>
+    <h2>LOAD 1</h2>
+    <div id="newsWrap_1"></div>
+    <h2>LOAD 2</h2>
+    <div id="newsWrap_2"></div>
 </body>
+<script>
+    $(function () {
+        $("#btn2").hide();
+        $("#btn1").on("click", function () {
+            $("#newsWrap_1")
+                .text("jquery_ajax_news #news_1");
+            $("#newsWrap_2")
+                .text("jquery_ajax_news #news_2");
+            $("#btn1").hide();
+            $("#btn2").show();
+        })
+
+        $("#btn2").on("click", function () {
+            $("#newsWrap_1").text($("#newsWrap_1").children().val());
+            $("#newsWrap_2").text($("#newsWrap_2").val());
+
+            $("#btn2").hide();
+            $("#btn1").show();
+        })
+    });
+</script>
 </html>
