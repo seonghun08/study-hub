@@ -51,7 +51,7 @@ public class FrontControllerServletV3 extends HttpServlet {
          * 4. viewResolver 호출 (호출 url 생성)
          * 5. MyView 반환
          */
-        MyView view = viewResolve(mv.getViewName());
+        MyView view = viewResolver(mv.getViewName());
 
         /*
          * 6. render(model) 호출
@@ -60,7 +60,7 @@ public class FrontControllerServletV3 extends HttpServlet {
     }
 
 
-    private MyView viewResolve(String viewName) {
+    private MyView viewResolver(String viewName) {
         return new MyView("/WEB-INF/views/" + viewName + ".jsp");
     }
 
