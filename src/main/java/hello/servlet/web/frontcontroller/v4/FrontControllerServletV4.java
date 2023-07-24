@@ -32,17 +32,17 @@ public class FrontControllerServletV4 extends HttpServlet {
 
         if (controller == null) {
             response.setStatus(HttpServletResponse.SC_NOT_FOUND);
-        return;
-    }
+            return;
+        }
 
-    Map<String, String> paramMap = createParamMap(request);
-    Map<String, Object> model = new HashMap<>();
+        Map<String, String> paramMap = createParamMap(request);
+        Map<String, Object> model = new HashMap<>();
 
-    String viewName = controller.process(paramMap, model);
+        String viewName = controller.process(paramMap, model);
 
-    MyView view = viewResolver(viewName);
+        MyView view = viewResolver(viewName);
         view.render(model, request, response);
-}
+    }
 
     private MyView viewResolver(String viewName) {
         return new MyView("/WEB-INF/views/" + viewName + ".jsp");
