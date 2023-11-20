@@ -30,8 +30,15 @@ public class HelloController {
     }
 
     @GetMapping("/hello-v2")
-    public String helloV2(@RequestParam IpPort data) {
+    public String helloV2(@RequestParam Integer data) {
         System.out.println("data = " + data);
+        return "ok";
+    }
+
+    @GetMapping("/ip-port")
+    public String ipPort(@RequestParam IpPort ipPort) {
+        log.info("ipPort IP={}", ipPort.getIp());
+        log.info("ipPort PORT={}", ipPort.getPort());
         return "ok";
     }
 
