@@ -1,9 +1,12 @@
 package hello.jdbc.repository;
 
 import hello.jdbc.domain.Member;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.jdbc.datasource.DataSourceUtils;
 import org.springframework.jdbc.support.JdbcUtils;
+import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.sql.DataSource;
 import java.sql.*;
@@ -16,13 +19,10 @@ import java.util.NoSuchElementException;
  * DataSourceUtils.releaseConnection()
  */
 @Slf4j
+@RequiredArgsConstructor
 public class MemberRepositoryV3 {
 
     private final DataSource dataSource;
-
-    public MemberRepositoryV3(DataSource dataSource) {
-        this.dataSource = dataSource;
-    }
 
     public Member save(Member member) throws SQLException {
         String sql = "insert into member(member_id, money) values (?, ?)";
