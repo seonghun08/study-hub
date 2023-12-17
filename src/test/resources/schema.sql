@@ -5,3 +5,6 @@ create table item (
  quantity integer,
  primary key (id)
 );
+
+--insert into item (id, item_name, price, quantity) values (1, 'spring', 10000, 100);
+--insert into item (id, item_name, price, quantity) values (2, 'mybatis', 20000, 100);
