@@ -1,53 +1,33 @@
-package hello.advanced.trace.hellotrace;
+package hello.advanced.trace.logtrace;
 
 import hello.advanced.trace.TraceId;
 import hello.advanced.trace.TraceStatus;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.stereotype.Component;
 
 @Slf4j
-@Component
-public class HelloTraceV2 {
+public class ThreadLocalLogTrace implements LogTrace {
 
     private static final String START_PREFIX = "-->";
     private static final String COMPLETE_PREFIX = "<--";
     private static final String EX_PREFIX = "<-x";
 
-    /**
-     * 로그를 시작하고 로그 메시지를 받아 시작 로그를 출력한다.
-     * @return TraceStatus
-     */
+    // private TraceId traceIdHolder; // traceId 동기화, 동시성 이슈 발생
+    private final ThreadLocal<TraceId> traceIdHolder = new ThreadLocal<>();
+
+    @Override
     public TraceStatus begin(String message) {
-        TraceId traceId = new TraceId();
+        syncTraceId();
         Long startTimeMs = System.currentTimeMillis();
-        log.info("[{}] {} {}", traceId.getId(), addSpace(START_PREFIX, traceId.getLevel()), message);
-        return new TraceStatus(traceId, startTimeMs, message);
+        log.info("[{}] {} {}", traceIdHolder.get().getId(), addSpace(START_PREFIX, traceIdHolder.get().getLevel()), message);
+        return new TraceStatus(traceIdHolder.get(), startTimeMs, message);
     }
 
-    /**
-     * 최초 로그 시작 이후, 다음 로그 시작을 위한 용도
-     * 깊이를 표현하기 위함 (레벨 증가)
-     * @return TraceStatus
-     */
-    public TraceStatus beginSync(TraceId beforeTraceId, String message) {
-        TraceId nextId = beforeTraceId.createNextId();
-        Long startTimeMs = System.currentTimeMillis();
-        log.info("[{}] {} {}", nextId.getId(), addSpace(START_PREFIX, nextId.getLevel()), message);
-        return new TraceStatus(nextId, startTimeMs, message);
-    }
-
-    /**
-     * 로그를 정상 종료한다.
-     * 현재 로그 상태를 확인하여 실행 시간을 계산 후, 종료시 로그 메시지를 출력한다.
-     */
+    @Override
     public void end(TraceStatus status) {
         complete(status, null);
     }
 
-    /**
-     * 로그를 예외 상황으로 종료한다.
-     * 현재 로그 상태와 Exception 정보를 확인하여 실행 시간을 계산 후, 종료시 예외 종료를 포함한 로그 메시지를 출력한다.
-     */
+    @Override
     public void exception(TraceStatus status, Exception e) {
         complete(status, e);
     }
@@ -70,6 +50,26 @@ public class HelloTraceV2 {
                     status.getMessage(),
                     resultTimeMs,
                     e.toString());
+        }
+
+        releaseTraceId();
+    }
+
+    private void syncTraceId() {
+        TraceId traceId = traceIdHolder.get();
+        if (traceId == null) {
+            traceIdHolder.set(new TraceId());
+        } else {
+            traceIdHolder.set(traceId.createNextId());
+        }
+    }
+
+    private void releaseTraceId() {
+        TraceId traceId = traceIdHolder.get();
+        if (traceId.isFirstLevel()) {
+            traceIdHolder.remove(); // destroy
+        } else {
+            traceIdHolder.set(traceId.createPreviousId());
         }
     }
 
