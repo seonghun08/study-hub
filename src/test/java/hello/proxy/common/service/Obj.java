@@ -11,4 +11,12 @@ public class Obj {
         this.username = username;
         this.age = age;
     }
+
+    @Override
+    public String toString() {
+        return "{" +
+                "\"username\":\"" + username + '\"' +
+                ", \"age\":" + age +
+                '}';
+    }
 }

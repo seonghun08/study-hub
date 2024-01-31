@@ -1,11 +1,8 @@
 package hello.proxy.common.advice;
 
-import hello.proxy.common.service.Obj;
 import lombok.extern.slf4j.Slf4j;
 import org.aopalliance.intercept.MethodInterceptor;
 import org.aopalliance.intercept.MethodInvocation;
-
-import java.lang.reflect.Method;
 
 @Slf4j
 public class TimeAdvice implements MethodInterceptor {
@@ -19,11 +16,6 @@ public class TimeAdvice implements MethodInterceptor {
         Object[] arguments = invocation.getArguments();
         for (Object argument : arguments) {
             log.info("argument={}", argument);
-
-            if (argument instanceof Obj) {
-
-            }
-
         }
 
         // Object result = methodProxy.invoke(target, args);
