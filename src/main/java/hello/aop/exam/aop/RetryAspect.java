@@ -27,6 +27,7 @@ public class RetryAspect {
             }
         }
 
+        assert exceptionHolder != null;
         throw exceptionHolder;
     }
 }
