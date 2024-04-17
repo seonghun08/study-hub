@@ -1,0 +1,37 @@
+management:
+  info:
+    java:
+      enabled: true
+    os:
+      enabled: true
+    env:
+      enabled: true
+
+#  server:
+#    port: 9292 # actuator 포트 변경 (기존 8080 포트가 아닌 9292로 접속 가능)
+
+  endpoint:
+    shutdown:
+      enabled: true
+    health:
+      show-components: always # 각 상태정보만 간략하게 노출한다.
+      # show-details: always # 각 상태 정보를 디테일하게 노출한다.
+
+  endpoints:
+    web:
+      exposure:
+        include: "*" # 모든 환경에 액츄에이터를 노출하겠다는 의미이다.
+
+info:
+  app:
+    name: hello-actuator
+    company: yh
+
+logging:
+  level:
+    hello.controller: debug # hello.controller 패키지 내 하위 패키지 모두 debug 레벨까지 출력한다.
+
+server:
+  tomcat:
+    mbeanregistry:
+      enabled: true
