@@ -1,0 +1,7 @@
+.gradle
+.idea
+
+src/main/resources/application-oauth.yml
+src/main/resources/application-real-db.yml
+build
+out
