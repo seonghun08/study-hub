@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>제이쿼리 배열 관련 메서드</title>
+    <script src="js/jquery.js"></script>
+    <script>
+        // $(function(){
+        //     var obj = [
+        //         {"area":"서울"},
+        //         {"area":"부산"},
+        //         {"area":"전주"}
+        //     ];
+
+        //     $(obj).each(function(i, o){
+        //             console.log(i + ":", o);
+        //     });
+        //     console.log("==== The End 1 ====");
+
+        //     $.each($("#menu2 li"), function(i, o){
+        //             console.log(i + ":", o);
+        //     });
+        //     console.log("==== The End 2 ====");    
+
+        //     $.each($("#menu2 li"), function(i){
+        //             console.log(i + ":", $(this));
+        //     });    
+        // });
+    </script>
+    <script>
+        // $(function(){
+        //     var arr1 = [
+        //         {
+        //             "area":"서울", 
+        //             "name":"무대리"
+        //         },{
+        //             "area":"부산", 
+        //             "name":"홍과장"
+        //         },{
+        //             "area":"대전", 
+        //             "name":"박사장"
+        //         },{
+        //             "area":"서울", 
+        //             "name":"빅마마"
+        //         }];
+    
+        //     // 메서드에서 반환된 데이터만 새 배열에 저장
+        //     var arr2 = $.map(arr1, function(a, b){
+        //         // console.log("a", a);
+        //         // console.log("b", b);
+        //         if(a.area == "서울") {
+        //             return a;
+        //         }
+        //     });
+        //     console.log(arr2);
+        //     console.log("==== first End ====");
+    
+        //     // 메서드에 반환 값이 true이면 새 배열에 저장
+        //     var arr3 = $.grep(arr1, function(a, b){
+        //         if(a.area == "부산") {
+        //             return true;
+        //         } else {
+        //             return false;
+        //         }
+        //     });
+        //     console.log(arr3);
+        //     console.log("==== Second End ====");    
+        // });
+    </script>
+    <script>
+        $(function(){
+            var arr1 = ["서울", "대전", "부산", "전주"];
+            var arr2 = ["한국", "미국", "일본", "중국"];
+            var obj = {
+                "name":"정부장", 
+                "area":"서울"
+            }
+            
+            // 해당 데이터에 가장 가까운 인덱스를 찾아 반환
+            var idxNum = $.inArray("부산", arr1);
+            console.log(idxNum);
+    
+            // 배열 객체인지 아닌지 반환
+            var okArray1 = $.isArray(arr1);
+            var okArray2 = $.isArray(obj);
+            console.log(okArray1);
+            console.log(okArray2);
+    
+            // 두 배열 객체를 하나의 배열 객체로 묶음
+            $.merge(arr2, arr1);
+            console.log(arr2);
+        });
+    </script>
+    <script>
+        $(function(){
+            // 해당 요소 인덱스를 찾아 인덱스 값 반환 <li id="list3">내용2-2</li> -> 0, 1, 2, 3, (4 반환), 5
+            var idxNum = $("li").index($("#list3"));
+            console.log(idxNum);
+        });
+    </script>
+</head>
+<body>
+    <h1>탐색 선택자</h1>
+	<ul id="menu1">
+		<li>내용1-1</li>
+		<li>내용1-2</li>
+		<li>내용1-3</li>
+	</ul>
+	<ul id="menu2">
+		<li>내용2-1</li>
+		<li id="list3">내용2-2</li>
+		<li>내용2-3</li>
+	</ul>
+</body>
+</html>

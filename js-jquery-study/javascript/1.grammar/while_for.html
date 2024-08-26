@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        .blue{ color: blue;}
+        .red{ color: red;}
+        .aqua{ color: aqua;}
+    </style>
+</head>
+<body>
+    <script>
+        var i = 20;
+        while (i >= 15) {
+            if (i % 5 == 0) {
+                document.write("<p class='aqua'>" + i + "</p>");
+            } else if (i % 2 == 0) {
+                document.write("<p class='blue'>" + i + "</p>");
+            } else {
+                document.write("<p class='red'>" + i + "</p>");
+            }
+            i--;
+        }
+        document.write("<hr/>");
+    </script>
+    <script>
+        var i = 1;
+        while (i < 10) {
+            document.write("<div class='blue'>2 x " + i + " = " + 2*i + "</div>");
+            i++;
+        }
+        document.write("<hr/>");
+    </script>
+    <script>
+        for (var i = 1; i <= 3; i++) {
+            for (var k = 1; k <= 2; k++) {
+                document.write(i + "행" + k + "열", "<br/>");
+            }
+            if (i != 3) document.write("<br/>");
+        }
+        document.write("<hr/>");
+    </script>
+    <script>
+        var num = 1;
+        var t = "<table border=1>";
+        for (var i = 1; i <= 5; i++) {
+            t+="<tr>"
+            for (var k = 1; k <= 5; k++) {
+                t+= "<td>" + num + "</td>";
+                num++;
+            }
+            t+="</tr>"
+        }
+        t+="</table>";
+        console.log(t);
+        document.write(t);
+    </script>
+</body>
+</html>

@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>적정 체중 구하기</title>
+</head>
+<body>
+    <script>
+        var name = prompt("이름을 알려주세요.", "");
+        var height = prompt("신장을 알려주세요.", "");
+        var weight = prompt("몸무게를 알려주세요.", "");
+
+        var normal = (height - 100) * 0.9;
+        var result = weight >= normal - 5 && weight <= normal + 5;
+
+        result = result ? "적정 체중입니다." : "적정 체중이 아닙니다.";
+        document.write(result);
+    </script>
+
+    <script>
+        // var price1 = 3000;
+        // var price2 = 6000;
+        // var price3 = 3000;
+
+        // var sum = price1 + price2 + price3;
+        // var result = sum < 10000 ? "돈 관리 잘했어요!" : sum - 10000 + "원 초과";
+        // document.write(result);
+    </script>
+
+    <script>
+        // var price1 = 1200;
+        // var price2 = 1300;
+        // var price3 = 1000;
+        // var average = (price1 + price2 + price3) / 3;
+
+        // var price4 = prompt("4분기 판매량을 입력하세요.");
+        // var result = price4 >= average ? "판매량이 평균 이상입니다." : "판매량이 평균 미달입니다.";
+        // document.write(result);
+    </script>
+</body>
+</html>

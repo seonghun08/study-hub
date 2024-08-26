@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset = "UTF-8">
+    <title>함수</title>
+    <script>
+        var count = 0;
+    
+        myFnc();
+        myFnc();
+        theFnc();
+    
+        function myFnc() {
+            count++;
+            document.write("hello " + count, "<br/>");
+        }
+        var theFnc = function() {
+            count++;
+            document.write("bye " + count, "<br/>");
+        }
+    </script>
+    <script>
+        var color = ["white", "yellow", "aqua", "purple"];
+        var i = 0;
+
+        function changeColor() {
+            i++;
+            if (i >= color.length) {
+                i = 0;
+            }
+            var bodyTag = document.getElementById("theBody");
+            bodyTag.style.backgroundColor = color[i];
+        }
+    </script>
+    <script>
+        introduce();
+        sum(10, 20, 30);
+
+        function introduce() {
+            var name = prompt("이름을 입력하세요.");
+            var area = prompt("사는 지역을 입력하세요.");
+            myFnc2(name, area);
+        }
+        function myFnc2(name, area) {
+            document.write("안녕하세요. " + name + "입니다.", "<br/>");
+            document.write("사는 곳은 " + area + "입니다.", "<br/>");
+        }
+        function sum() {
+            var sum = arguments[0] + arguments[1] + arguments[2];
+            document.write("sum(10, 20, 30) == "+ sum, "<br/>");
+        }
+    </script>
+</head>
+<body id="theBody">
+    <button onclick="changeColor();">배경색 바꾸기</button>
+</body>
+</html>

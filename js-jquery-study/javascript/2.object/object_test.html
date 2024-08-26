@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        .red{ color: red;}
+    </style>
+</head>
+<body>
+    <script>
+        // var tv = new Object();
+        // tv.color = "white";
+        // tv.price = 3000000;
+        // tv.info = function() {
+        //     document.write("<h2>tv.info() 호출</h2>");
+        //     document.write("tv 색상: " + this.color, "<br/>");
+        //     document.write("tv 가격: " + this.price, "<br/>");
+        // }
+
+        // const car = {
+        //     color:"black",
+        //     price:50000000,
+        //     info: function() {
+        //         document.write("<h2>car.info() 호출</h2>");
+        //         document.write("car 색상: " + this.color, "<br/>");
+        //         document.write("car 가격: " + this.price, "<br/>");
+        //     }
+        // }
+
+        // var info = prompt("tv, car 중 하나를 입력해주세요.");
+        // if (info === "tv") tv.info();
+        // else if (info === "car") car.info();
+        // else alert("잘못된 입력입니다.");
+    </script>
+    <script>
+        var today = new Date();
+        var nowMonth = today.getMonth() + 1;
+        nowDate = today.getDate();
+        nowDay = today.getDay();
+
+        if (today.getDay() == 0) nowDay = "일요일";
+        else if (today.getDay() == 1) nowDay = "월요일";
+        else if (today.getDay() == 2) nowDay = "화요일";
+        else if (today.getDay() == 3) nowDay = "수요일";
+        else if (today.getDay() == 4) nowDay = "목요일";
+        else if (today.getDay() == 5) nowDay = "금요일";
+        else nowDay = "토요일";
+
+        document.write("<h2>오늘 날짜 정보</h2>");
+        document.write("현재 날짜: " + today, "<br/>");
+        document.write("현재 월: " + nowMonth, "<br/>");
+        document.write("현재 일: " + nowDate, "<br/>");
+        document.write("현재 요일: " + nowDay, "<br/>");
+        document.write("<hr/>");
+    </script>
+    <script>
+        var today = new Date();
+        var nowYear = today.getFullYear();
+
+        var theDate = new Date(nowYear, 11, 31);
+        var diffDate = theDate.getTime() - today.getTime();
+        
+        var result = Math.ceil(diffDate / (60 * 1000 * 60 * 24));
+        document.write("<h2>현재부터 올해 연말까지 남은 일수</h2>")
+        document.write("연말 D-day: <strong>"+ result + "</strong>일 남았습니다.");
+        document.write("<hr/>")
+    </script>
+    <script>
+        document.write("<h2>가위, 바위, 보 맞추기</h2>");
+        var game = prompt("가위, 바위, 보 중 선택해주세요.");
+        var gameNum;
+
+        switch (game) {
+            case "가위":
+                gameNum = 1;
+            break;
+            case "바위":
+                gameNum = 2;
+            break;
+            case "보":
+                gameNum = 3;
+            break;
+            default:
+                alert("잘못된 값입니다.");
+                location.reload();
+        }
+
+        var com = Math.ceil(Math.random() * 3);
+        var result;
+        if (com == 1) result = "가위";
+        else if (com == 2) result = "바위";
+        else result = "보";
+
+        document.write("나: <strong>" + game + "</strong><br/>");
+        document.write("컴퓨터: <strong>" + result + "</strong><br/>");
+
+        if (gameNum == com) {
+            document.write("<div class='red'>맞추셨습니다!!</div>");
+        } else {
+            document.write("<div class='red'>맞추지 못했습니다.</div>");
+        }
+    </script>
+</body>
+</html>

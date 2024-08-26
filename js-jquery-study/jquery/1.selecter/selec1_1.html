@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>제이쿼리 선택자</title>
+    <script src="js/jquery.js"></script>
+    <script>
+        $(function() {
+            // 전체 선택자 "*"
+            $("*").css("border", "1px solid aqua");
+        });
+
+        $(function() {
+            // #아이디명, id="아이디명"에 포함하는 요소에 적용
+            $("#subject").css("border", "2px solid blue");
+        });
+
+        $(function() {
+            // .class
+            $(".select").css("border", "2px solid yellow");
+        });
+
+        $(function() {
+            // tag h1
+            $("h1").css("border", "2px dashed #f00");
+        });
+
+        $(function() {
+            // #tit, h3 여러 요소를 선택하고 싶을 때 사용 (1개 이상 포함되는 경우 적용된다.)
+            $("#tit, h3")
+            .css("background-color", "#0ff")
+            .css("border", "2px dashed blue");
+        })
+
+        $(function() {
+            // h4.tit 여러 요소를 선택하고 싶을 때 사용 (둘다 포함되는 경우 적용된다.)
+            $("h4.tit")
+            .css("color", "white")
+            .css("background-color", "black")
+            .css("border", "2px dashed white");
+        })
+    </script>
+</head>
+<body>
+    <h1>"h1" == 제이쿼리</h1>
+    <h2 id="subject">"#subject" == 선택자</h1>
+    <h2 class="select">"select" == 직접선택자</h2>
+    <div>"*" == 전체 선택자</div>
+    <h3 id="tit">"#tit, h1" == 여러 요소 선택</h3>
+    <h3>"h3" == 여러 요소 선택</h3>
+    <h4 class="tit">"h4.tit" == 여러 요소 선택</h4>
+</body>
+</html>

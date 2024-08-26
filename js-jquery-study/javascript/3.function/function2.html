@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <!-- <script>
+        var arrSubject = ["국어", "수학"];
+        var result = testAvg(arrSubject);
+        document.write("평균 점수는 " + result + "점입니다.");
+
+        function testAvg(arrData) {
+            var sum = 0;
+            for (var i = 0; i < arrData.length; i++) {
+                sum+=Number(prompt(arrData[i] + " 점수는?"));
+            }
+
+            console.log(sum);
+
+            if (isNaN(sum)) {
+                alert("잘못된 값을 입력하셨습니다.")
+                location.reload();
+            }
+
+            var avg = sum/arrData.length;
+            return avg;
+        }
+    </script> -->
+    <script>
+        var num = 1;
+        function gallery(direct) {
+            if (direct) {
+                if (num == 9) num = 1;
+                else num++;
+            } else {
+                if (num == 1) num = 9;
+                else num--;
+            }
+            var imgTag = document.getElementById("photo");
+            imgTag.setAttribute("src", "images/pic_" + num + ".jpg");
+        }
+    </script>
+    <script>
+        var num2 = 0;
+        testFnc();
+
+        function testFnc() {
+            num2++;
+            document.write(num2, " ");
+            if (num2 == 10) return;
+            testFnc(); // 재귀함수 다시 호출
+        }
+    </script>
+</head>
+<body>
+    <div id="galleryZone">
+        <p><img src="images/pic_1.jpg" id="photo" alt="" height="300" width="300"></p>
+        <p>
+            <button onclick="gallery(0)">이전</button>
+            <button onclick="gallery(1)">다음</button>
+            <button onclick="location.reload()">초기화</button>
+        </p>
+    </div>
+</body>
+</html>

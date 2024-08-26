@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>자주 사용되는 선택자 정리</title>
+    <script src="js/jquery.js"></script>
+    <style>
+        .active {font-size: large; color: red;}
+        .none {font-size: small; color: aquamarine;}
+    </style>
+    <script>
+        $(function() {
+            $(".wrap_1 p:first").text("(텍스트) 내용 변경");
+
+            // p.active 붙어 있으면 <p> 요소에 해당하는 class="active" 적용
+            // p .active 떨어져 있으면 <p> 요소의 자식 요소 class="active" 적용
+            $(".wrap_1 p .active").removeClass("active").addClass("none");            
+
+            $(".wrap_1 p:eq(2) a").text("Naver").attr("href", "http://www.naver.com");
+
+            // value 초기값 -> korea 변환
+            $(".wrap_1 p:eq(3) input").val("korea");
+
+            $(".wrap_2 p:first").after("<p style='color: violet;'>After 추가</p>");
+		    $(".wrap_2 p:first").before("<p>Before 추가</p>");
+
+            // 해당 요소의 부모 요소를 삭제 후, 해당 요소의 모든 하위 요소를 새 요소 적용
+            $(".wrap_3 p").unwrap().wrapInner("<strong/>");
+        })
+    </script>
+</head>
+<body>
+    <div class="wrap_1">
+		<p>텍스트</p>
+		<p>
+            <span class="active">active >>> none</span>
+        </p>
+		<p><a href="http://www.google.com">Google</a></p>
+		<p>
+            <label for="name">이름</label>
+			<input id="name" type="text" value="input">
+		</p>
+	</div>
+	<div class="wrap_2"> 
+		<p>내용5</p>
+		<p>내용6</p>
+	</div>
+	<div class="wrap_3">
+		<div>
+			<p>내용7</p>
+			<p>내용8</p>
+		</div>
+	</div>
+</body>
+</html>

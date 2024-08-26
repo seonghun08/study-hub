@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>window 객체</title>
+</head>
+<body>
+    <h2>윈도우 객체 사용해보기</h2>
+    <!-- <p>
+        <img src="C:\dev\front-dev\images\sample.jpg" usemap="#intro" alt="신간 책 소개">
+        <map name="intro" id="intro">
+            <area shape="rect" coords="230,368,280,390" href="#" alt="창 닫기"  onclick="window.close()">
+        </map>
+    </p> -->
+    
+    <!-- <script>
+        alert("잘못 입력했습니다.");
+        var pt = prompt("당신의 연령은?", "0");
+        console.log("prompt", pt);
+        var cm = confirm("정말로 삭제하시겠습니까?");
+        console.log("confirm", cm)
+    </script> -->
+
+    <!-- <script>
+        var addNum = 0;
+        var subNum = 1000;
+
+        var auto_1 = setInterval(function() {
+            addNum++;
+            console.log("addNum: " + addNum);
+        }, 3000); // 3초 (3000) 3초 간격으로 반복 실행합니다.
+
+        var auto_2 = setInterval(function() {
+            subNum--;
+            console.log("subNum: " + subNum);
+        }, 3000)
+    </script>
+
+    <button onclick="clearInterval(auto_1)">증가 정지</button>
+    <button onclick="clearInterval(auto_2)">감소 정지</button> -->
+
+    <!-- <script>
+        var addNum = 0;
+        var auto = setTimeout(function() {
+            addNum++;
+            console.log(addNum)
+        }, 1000);
+    </script> -->
+
+    <!-- <script>
+        var info = navigator.userAgent.toLowerCase();
+        // document.write(info);
+        var oslmg = null;
+
+        if (info.indexOf('windows') >= 0) {
+            oslmg = "windows.png";
+        } else if (info.indexOf('macintosh') >= 0) {
+            oslmg = "macintosh.png";
+        } else if (info.indexOf('iphone') >= 0) {
+            oslmg = "iphone.png";
+        } else if (info.indexOf('android') >= 0) {
+            oslmg = "android.png";
+        }
+
+        var index = oslmg.indexOf('.');
+        oslmg = oslmg.substring(0, index);
+
+        var scr = screen;
+        var sc_w = scr.width;
+        var sc_h = scr.height;
+
+        document.write("<div>" + oslmg + "</div>");
+        document.write("모니터 해상도 너비: " + sc_w + "px", "<br/>");
+        document.write("모니터 해상도 높이: " + sc_h + "px", "<br/>");
+    </script> -->
+
+    <script>
+        var phoneNum = "010-1234-1234";
+        var result_1 = phoneNum.substring(0, 9) + "****";
+        document.write(result_1, "<br/>");
+
+        var imgSrc = "images/bnt_out.jpg";
+        var result_2 = imgSrc.replace("out", "over");
+        document.write(result_2, "<br/>");
+
+        var menu = ["짜장면", "돈까스", "된장국", "김치찌개", "회덮밥"];
+        var menuNum = Math.floor(Math.random() * 5);
+
+        var result = menu[menuNum];
+        document.write(result, "<br/>");
+    </script>
+    
+</body>
+</html>
